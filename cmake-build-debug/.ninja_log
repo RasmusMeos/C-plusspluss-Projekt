@@ -1,0 +1,7 @@
+# ninja log v5
+0	470	1714111984943417871	CMakeFiles/C_plusspluss_Projekt.dir/main.cpp.o	4c506fa8bb689f61
+473	519	1714111984993935453	C_plusspluss_Projekt	a93d30001a544b23
+0	485	1714113990893834916	CMakeFiles/C_plusspluss_Projekt.dir/src/kasutaja.cpp.o	92685331a1bfc007
+1	519	1714113990928107834	CMakeFiles/C_plusspluss_Projekt.dir/src/treeningkava.cpp.o	24a037a1a2cec9ce
+0	1286	1714113991692794066	CMakeFiles/C_plusspluss_Projekt.dir/src/main.cpp.o	6caaade1048d7c83
+1286	1336	1714113991746362196	C_plusspluss_Projekt	29438652b678e4f9
