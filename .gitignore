@@ -1,0 +1,14 @@
+# CMake ja Make build kaustad
+cmake-build-debug/
+build/
+*.o
+*.a
+*.so
+*.exe
+*.out
+.DS_Store
+
+# log failid või IDE sätted
+*.log
+.vscode/
+.idea/

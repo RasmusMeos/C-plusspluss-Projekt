@@ -3,12 +3,17 @@
 
 #include <vector>
 #include <string>
+#include <map>
+
 
 class Treeningkava {
 public:
-    std::vector<std::string> treeningpaevad;
-    Treeningkava(const std::vector<std::string>& treeningpaevad);
+
+    std::map<std::string,std::string>& kava;
+
+    Treeningkava(std::map<std::string,std::string> &kava);
     void kuva_treeningkava();
+
 };
 
 #endif

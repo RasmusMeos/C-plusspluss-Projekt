@@ -1,0 +1,59 @@
+{
+    "kasutaja": [
+        {
+            "entries": [
+                {
+                    "eesmärk": "vähendada_kaalu",
+                    "kaal": 82.0,
+                    "treeningkava": {
+                        "esmaspäev": "30 min cardio",
+                        "kolmapäev": "Strength training: Legs and Back",
+                        "reede": "Strength training: Arms and Shoulders"
+                    },
+                    "vanus": 31
+                },
+                {
+                    "eesmärk": "hoida_vormi",
+                    "kaal": 75.0,
+                    "treeningkava": {
+                        "esmaspäev": "30 min cardio",
+                        "kolmapäev": "Strength training: Legs and Back",
+                        "reede": "Strength training: Arms and Shoulders"
+                    },
+                    "vanus": 32
+                }
+            ],
+            "nimi": "Esimene"
+        },
+        {
+            "entries": [
+                {
+                    "eesmärk": "kasvatada_lihast",
+                    "kaal": 90.0,
+                    "treeningkava": {
+                        "esmaspäev": "30 min cardio",
+                        "kolmapäev": "Strength training: Legs and Back",
+                        "reede": "Strength training: Arms and Shoulders"
+                    },
+                    "vanus": 27
+                }
+            ],
+            "nimi": "Teine"
+        },
+        {
+            "entries": [
+                {
+                    "eesmärk": "niisama",
+                    "kaal": 78.0,
+                    "treeningkava": {
+                        "esmaspäev": "30 min cardio",
+                        "kolmapäev": "Strength training: Legs and Back",
+                        "reede": "Strength training: Arms and Shoulders"
+                    },
+                    "vanus": 81
+                }
+            ],
+            "nimi": "Kolmas"
+        }
+    ]
+}
