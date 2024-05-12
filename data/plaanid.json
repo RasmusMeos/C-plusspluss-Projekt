@@ -1,0 +1,7 @@
+{
+  "kavad": {
+    "iga_teine_päev": ["Nädal 1: Esmaspäev", "Nädal 1: Kolmapäev", "Nädal 1: Reede", "Nädal 1: Pühapäev", "Nädal 2: Teisipäev", "Nädal 2: Laupäev"],
+    "iga_kolmas_päev": ["Nädal 1: Esmaspäev", "Nädal 1: Neljapäev", "Nädal 1: Pühapäev", "Nädal 2: Kolmapäev", "Nädal 2: Laupäev", "Nädal 3: Teisipäev", "Nädal 3: Reede"],
+    "ainult_nädalavahetused": ["Nädal 1: Laupäev", "Nädal 1: Pühapäev"]
+  }
+}

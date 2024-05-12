@@ -1,0 +1,47 @@
+{
+  "push": [
+    {"harjutus": "Bench Press", "kordused": "4x8-10"},
+    {"harjutus": "Incline Dumbbell Press", "kordused": "3x8-10"},
+    {"harjutus": "Overhead Press", "kordused": "4x8-10"},
+    {"harjutus": "Triceps Dips", "kordused": "3x10"},
+    {"harjutus": "Push-ups", "kordused": "3x15"},
+    {"harjutus": "Triceps Rope Pushdown", "kordused": "3x10-12"},
+    {"harjutus": "Arnold Press", "kordused": "3x10"}
+  ],
+  "pull": [
+    {"harjutus": "Pull-ups", "kordused": "3x till failure"},
+    {"harjutus": "Deadlift", "kordused": "4x6-8"},
+    {"harjutus": "Bent Over Row", "kordused": "4x8-10"},
+    {"harjutus": "Face Pull", "kordused": "3x12-15"},
+    {"harjutus": "Hammer Curls", "kordused": "3x10"},
+    {"harjutus": "Reverse Flyes", "kordused": "3x10-12"},
+    {"harjutus": "Lat Pulldown", "kordused": "3x10"}
+  ],
+  "jalad": [
+    {"harjutus": "Squats", "kordused": "5x5"},
+    {"harjutus": "Leg Press", "kordused": "4x10"},
+    {"harjutus": "Lunges", "kordused": "3x12 per leg"},
+    {"harjutus": "Leg Curls", "kordused": "3x10"},
+    {"harjutus": "Calf Raises", "kordused": "4x12"},
+    {"harjutus": "Leg Extensions", "kordused": "3x10"},
+    {"harjutus": "Sumo Deadlift", "kordused": "4x8"}
+  ],
+  "core": [
+    {"harjutus": "Planks", "kestvus": "3x60 sekundit"},
+    {"harjutus": "Russian Twists", "kordused": "3x15 per side"},
+    {"harjutus": "Hanging Leg Raises", "kordused": "3x10"},
+    {"harjutus": "Bicycle Crunches", "kordused": "3x15 per side"},
+    {"harjutus": "Ab Wheel Rollout", "kordused": "3x10"},
+    {"harjutus": "Cable Crunches", "kordused": "3x10"},
+    {"harjutus": "V-ups", "kordused": "3x10"}
+  ],
+  "cardio": [
+    {"harjutus": "Jooksmine", "kestvus": "30 minutit"},
+    {"harjutus": "Ujumine", "kestvus": "30 minutit"},
+    {"harjutus": "Rattasõit", "kestvus": "45 minutit"},
+    {"harjutus": "Sõudmine", "kestvus": "30 minutit"},
+    {"harjutus": "Hüppenööriga hüppamine", "kestvus": "15 minutit"},
+    {"harjutus": "Trepi ronimine", "kestvus": "20 minutit"},
+    {"harjutus": "HIIT", "kestvus": "20 minutit"}
+  ]
+}

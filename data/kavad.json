@@ -1,7 +1,8 @@
 {
     "kasutaja": [
         {
-            "entries": [
+            "nimi": "Esimene",
+            "sissekanded": [
                 {
                     "eesmärk": "vähendada_kaalu",
                     "kaal": 82.0,
@@ -22,11 +23,11 @@
                     },
                     "vanus": 32
                 }
-            ],
-            "nimi": "Esimene"
+            ]
         },
         {
-            "entries": [
+            "nimi": "Teine",
+            "sissekanded": [
                 {
                     "eesmärk": "kasvatada_lihast",
                     "kaal": 90.0,
@@ -37,11 +38,11 @@
                     },
                     "vanus": 27
                 }
-            ],
-            "nimi": "Teine"
+            ]
         },
         {
-            "entries": [
+            "nimi": "Kolmas",
+            "sissekanded": [
                 {
                     "eesmärk": "niisama",
                     "kaal": 78.0,
@@ -52,8 +53,7 @@
                     },
                     "vanus": 81
                 }
-            ],
-            "nimi": "Kolmas"
+            ]
         }
     ]
 }

@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <vector>
 #include <map>
 #include "../include/kasutaja.h"
 #include "../include/treeningkava.h"
@@ -16,20 +17,65 @@
 void koguKasutajaAndmed(std::string& nimi, int& vanus, float& kaal, std::string& eesmark) {
     std::cout << "Sisesta oma nimi: ";
     std::cin >> nimi;
-    std::cout << "Sisesta oma vanus: ";
-    std::cin >> vanus;
-    if (vanus < 0) {
-        std::cerr << "Error: Vanus peab olema positiivne!\n";
-        exit(1);
+
+    while (true) {
+        std::cout << "Sisesta oma vanus: ";
+        std::cin >> vanus;
+        if (std::cin.fail() || vanus < 0) {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cerr << "Error: Vanus peab olema positiivne ja numbriline. Proovi uuesti.\n";
+            continue;
+        }
+        if (vanus < 17) {
+            std::cout << "Hoiatus: Oled alla 17 aasta vanune. Palun konsulteeri treeneriga enne treeningprogrammi alustamist. (Vajuta sisestusklahvi jätkamiseks)\n";
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cin.get();
+        }
+        break;
     }
-    std::cout << "Sisesta oma kaal (kg): ";
-    std::cin >> kaal;
-    if (kaal <= 0) {
-        std::cerr << "Error: Kaal peab olema suurem kui 0!\n";
-        exit(1);
+
+    while (true) {
+        std::cout << "Sisesta oma kaal (kg): ";
+        std::cin >> kaal;
+        if (std::cin.fail() || kaal <= 0) {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cerr << "Error: Kaal peab olema suurem kui 0 ja numbriline. Proovi uuesti.\n";
+            continue;
+        }
+        break;
     }
+
     std::cout << "Sisesta oma fitness eesmärk: ";
     std::cin >> eesmark;
+}
+
+
+std::vector<std::string> laeTreeningPlaan(const std::string& failiTee, int& valik) {
+    std::ifstream inputFile(failiTee);
+    nlohmann::json j;
+    if (inputFile) {
+        inputFile >> j;
+        inputFile.close();
+    } else {
+        std::cerr << "Error: Ei saa avada plaanid.json faili.\n";
+        exit(1);
+    }
+
+    std::vector<std::string> plaan;
+    switch (valik) {
+        case 1:
+            plaan = j["kavad"]["iga_teine_päev"].get<std::vector<std::string>>();
+            break;
+        case 2:
+            plaan = j["kavad"]["iga_kolmas_päev"].get<std::vector<std::string>>();
+            break;
+        case 3:
+            plaan = j["kavad"]["ainult_nädalavahetused"].get<std::vector<std::string>>();
+            break;
+    }
+    return plaan;
 }
 
 
@@ -56,6 +102,31 @@ void initsialiseeriTreeningkava() {
     Treeningkava kava(treeningKava);
     kava.kuva_treeningkava();
 }
+
+int kasutajaValik(const std::string& teade) {
+    int valik;
+    do {
+        std::cout << teade;
+        std::cin >> valik;
+        if (std::cin.fail() || valik < 1 || valik > 3) {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cerr << "Error: Palun sisesta korrektne valik (1, 2 või 3).\n";
+            continue;
+        }
+        break;
+    } while (true);
+    return valik;
+}
+
+//Abimeetod info kuvamiseks
+void kuvaInfot(const std::vector<std::string>& list) {
+    for (const auto& yksus : list) {
+        std::cout << yksus << std::endl;
+    }
+}
+
+
 
 
 /**
@@ -141,16 +212,42 @@ void kaitleJson(const std::string& failiTee, const std::string& nimi, int vanus,
 }
 
 int main() {
-    std::string failiTee = "../data/kavad.json";
+    /* std::string failiTeeKavad = "../data/kavad.json";
+     * std::string failiTeeHarjutused = "../data/harjutused.json"; */
+
+
+    std::string failiTeePlaanid = "../data/plaanid.json";
     std::string nimi;
-    int vanus;
+    int vanus, plaaniValik;
     float kaal;
     std::string eesmark;
 
     koguKasutajaAndmed(nimi, vanus, kaal, eesmark);
+
+    plaaniValik = kasutajaValik("Vali oma treeningplaan (1: iga teine päev, 2: iga kolmas päev, 3: ainult nädalavahetused): ");
+    auto treeningPlaan = laeTreeningPlaan(failiTeePlaanid, plaaniValik);
+    kuvaInfot(treeningPlaan);
+
+    int rutiiniValik = kasutajaValik("Vali oma treenimistüüp (1: ainult jõusaal, 2: ainult kardio, 3: kombinatsioon mõlemast): ");
+
+
+    std::vector<std::vector<std::string>> genereeritudKavad;
+
+    for (int i = 0; i < genereeritudKavad.size(); i++) {
+        std::cout << "Kava " << i+1 << ":\n";
+        kuvaInfot(genereeritudKavad[i]);
+    }
+
+    int kavaValik = kasutajaValik("Vali endale sobiv treeningkava: (treeningkava number)");
+    std::cout << "Teie valitud treeningkava:\n";
+    kuvaInfot(genereeritudKavad[kavaValik -1]);
+
+
+   /* koguKasutajaAndmed(nimi, vanus, kaal, eesmark);
     initsialiseeriKasutaja(nimi, vanus, kaal, eesmark);
     initsialiseeriTreeningkava();
-    kaitleJson(failiTee, nimi, vanus, kaal, eesmark);
+    kaitleJson(failiTeePlaanid, nimi, vanus, kaal, eesmark); */
 
     return 0;
+
 }
