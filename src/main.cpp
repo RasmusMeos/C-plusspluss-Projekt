@@ -151,12 +151,23 @@ std::map<std::string, std::vector<std::pair<std::string, std::string>>> laeHarju
     return harjutused;
 }
 
-std::pair<std::vector<std::pair<std::string, std::string>>, std::map<std::string, std::vector<std::pair<std::string, std::string>>>> genereeriTreeningSessioon(
+void taastaHarjutusteList(std::map<std::string, std::vector<std::pair<std::string, std::string>>>& harjutused,
+                          const std::map<std::string, std::vector<std::pair<std::string, std::string>>>& harjutusedOriginaal) {
+    harjutused = harjutusedOriginaal;
+}
+
+
+
+std::vector<std::pair<std::string, std::string>> genereeriTreeningSessioon(
         std::map<std::string, std::vector<std::pair<std::string, std::string>>>& harjutused,
-        const std::vector<std::string>& kategooriad, int mituHarjutust) {
+        const std::map<std::string, std::vector<std::pair<std::string, std::string>>>& harjutusedOriginaal,
+        const std::vector<std::string>& kategooriad, int mituHarjutust, bool lahtesta) {
+
+    if (lahtesta) {
+        taastaHarjutusteList(harjutused, harjutusedOriginaal);
+    }
 
     std::vector<std::pair<std::string, std::string>> treeningSessioon;
-
     for (int i = 0; i < mituHarjutust; ++i) {
         const auto& kategooria = kategooriad[rand() % kategooriad.size()];
         auto& harjutusteList = harjutused[kategooria];
@@ -166,37 +177,99 @@ std::pair<std::vector<std::pair<std::string, std::string>>, std::map<std::string
             harjutusteList.erase(harjutusteList.begin() + idx);
         }
     }
-    return {treeningSessioon, harjutused};
+    return treeningSessioon;
+}
+
+std::vector<std::vector<std::pair<std::string, std::string>>> genereeriIgaKolmasPaevKavad(
+        std::map<std::string, std::vector<std::pair<std::string, std::string>>>& harjutused,
+        const std::map<std::string, std::vector<std::pair<std::string, std::string>>>& harjutusedOriginaal,
+        int rutiiniValik) {
+
+    std::vector<std::string> jousaalKategooriad = {"push", "pull", "jalad", "core"};
+    std::vector<std::string> kardioKategooriad = {"cardio"};
+    std::vector<std::vector<std::pair<std::string, std::string>>> kavad;
+    bool jousaaliPaev;
+
+    for (int paev = 1; paev <= 7; ++paev) {
+        if (rutiiniValik == 1) {  // ainult jõusaal
+            kavad.push_back(genereeriTreeningSessioon(harjutused, harjutusedOriginaal, jousaalKategooriad, 8, paev % 2 != 0));
+        } else if (rutiiniValik == 2) {  // ainult kardio
+            kavad.push_back(genereeriTreeningSessioon(harjutused, harjutusedOriginaal, kardioKategooriad, 4, true));
+        } else if (rutiiniValik == 3) {  // kombinatsioon mõlemast
+            jousaaliPaev = (paev % 2 != 0);  // Alustades jõusaaliga
+            if (jousaaliPaev) {
+                kavad.push_back(genereeriTreeningSessioon(harjutused, harjutusedOriginaal, jousaalKategooriad, 8, true));
+            } else {
+                kavad.push_back(genereeriTreeningSessioon(harjutused, harjutusedOriginaal, kardioKategooriad, 4, true));
+            }
+        }
+    }
+
+    taastaHarjutusteList(harjutused, harjutusedOriginaal);
+    return kavad;
 }
 
 
+std::vector<std::vector<std::pair<std::string, std::string>>> genereeriIgaTeinePaevKavad(
+        std::map<std::string, std::vector<std::pair<std::string, std::string>>>& harjutused,
+        const std::map<std::string, std::vector<std::pair<std::string, std::string>>>& harjutusedOriginaal,
+        int rutiiniValik) {
+
+    std::vector<std::string> jousaalKategooriad1 = {"push", "jalad"};
+    std::vector<std::string> jousaalKategooriad2 = {"pull", "core"};
+    std::vector<std::string> jousaalKategooriad = {"push", "pull", "jalad", "core"};
+    std::vector<std::string> kardioKategooriad = {"cardio"};
+    std::vector<std::vector<std::pair<std::string, std::string>>> kavad;
+    bool jousaaliPaev;
+
+    for (int paev = 1; paev <= 6; ++paev) {
+        if (rutiiniValik == 1) {  // ainult jõusaal
+            std::vector<std::string>& valitudKategooriad = (paev % 2 != 0) ? jousaalKategooriad1 : jousaalKategooriad2;
+            kavad.push_back(genereeriTreeningSessioon(harjutused, harjutusedOriginaal, valitudKategooriad, 6, true));
+        } else if (rutiiniValik == 2) {  // ainult kardio
+            kavad.push_back(genereeriTreeningSessioon(harjutused, harjutusedOriginaal, kardioKategooriad, 3, true));
+        } else if (rutiiniValik == 3) {  // kombinatsioon mõlemast
+            jousaaliPaev = (paev % 2 != 0);  // Alustades jõusaaliga
+            if (jousaaliPaev) {
+                kavad.push_back(genereeriTreeningSessioon(harjutused, harjutusedOriginaal, jousaalKategooriad, 6, true));
+            } else {
+                kavad.push_back(genereeriTreeningSessioon(harjutused, harjutusedOriginaal, kardioKategooriad, 3, true));
+            }
+        }
+    }
+
+    taastaHarjutusteList(harjutused, harjutusedOriginaal);
+    return kavad;
+}
+
+
+
+
 std::vector<std::vector<std::pair<std::string, std::string>>> genereeriNadalavahetuseKavad(
-        std::map<std::string, std::vector<std::pair<std::string, std::string>>>& harjutused, int rutiiniValik) {
+        std::map<std::string, std::vector<std::pair<std::string, std::string>>>& harjutused,
+        const std::map<std::string, std::vector<std::pair<std::string, std::string>>>& harjutusedOriginaal,
+        int rutiiniValik) {
 
     std::vector<std::vector<std::pair<std::string, std::string>>> kavad;
     std::vector<std::string> jousaalKategooriad = {"push", "pull", "jalad", "core"};
     std::vector<std::string> kardioKategooriad = {"cardio"};
-    std::pair<std::vector<std::pair<std::string, std::string>>, std::map<std::string, std::vector<std::pair<std::string, std::string>>>> tulem;
 
-    if (rutiiniValik == 1) { // ainult jõusaal
-        tulem = genereeriTreeningSessioon(harjutused, jousaalKategooriad, 10);
-        kavad.push_back(tulem.first);
-        tulem = genereeriTreeningSessioon(tulem.second, jousaalKategooriad, 10);
-        kavad.push_back(tulem.first);
-    } else if (rutiiniValik == 2) { // ainult kardio
-        tulem = genereeriTreeningSessioon(harjutused, kardioKategooriad, 5);
-        kavad.push_back(tulem.first);
-        tulem = genereeriTreeningSessioon(harjutused, kardioKategooriad, 5);
-        kavad.push_back(tulem.first);
-    } else if (rutiiniValik == 3) { // kombinatsioon mõlemast
-        tulem = genereeriTreeningSessioon(harjutused, jousaalKategooriad, 10);
-        kavad.push_back(tulem.first);
-        tulem = genereeriTreeningSessioon(harjutused, kardioKategooriad, 5);
-        kavad.push_back(tulem.first);
+    if (rutiiniValik == 1) { // Ainult jõusaal
+        kavad.push_back(genereeriTreeningSessioon(harjutused, harjutusedOriginaal, jousaalKategooriad, 10, false));
+        kavad.push_back(genereeriTreeningSessioon(harjutused, harjutusedOriginaal, jousaalKategooriad, 10, false));
+    } else if (rutiiniValik == 2) { // Ainult kardio
+        kavad.push_back(genereeriTreeningSessioon(harjutused, harjutusedOriginaal, kardioKategooriad, 5, true));
+        kavad.push_back(genereeriTreeningSessioon(harjutused, harjutusedOriginaal, kardioKategooriad, 5, true));
+    } else if (rutiiniValik == 3) { // Kombinatsioon mõlemast
+        kavad.push_back(genereeriTreeningSessioon(harjutused, harjutusedOriginaal, jousaalKategooriad, 10, false));
+        kavad.push_back(genereeriTreeningSessioon(harjutused, harjutusedOriginaal, kardioKategooriad, 5, true));
     }
 
+    taastaHarjutusteList(harjutused, harjutusedOriginaal);
     return kavad;
 }
+
+
 
 
 void kuvaNadalavahetuseKava(const std::vector<std::vector<std::pair<std::string, std::string>>>& kavad) {
@@ -212,6 +285,94 @@ void kuvaNadalavahetuseKava(const std::vector<std::vector<std::pair<std::string,
     std::cout << "----------------------\n";
 }
 
+void kuvaIgaKolmasPaevKava(const std::vector<std::vector<std::pair<std::string, std::string>>>& kavad, const std::vector<std::string>& paevad) {
+    for (size_t i = 0; i < kavad.size(); ++i) {
+        std::cout << paevad[i] << ":\n";
+        for (const auto& harjutus : kavad[i]) {
+            std::cout << harjutus.first << " - " << harjutus.second << std::endl;
+        }
+        std::cout << "----------------------\n";
+    }
+}
+
+void kuvaIgaTeinePaevKava(const std::vector<std::vector<std::pair<std::string, std::string>>>& kavad, const std::vector<std::string>& paevad) {
+    for (size_t i = 0; i < kavad.size(); ++i) {
+        std::cout << paevad[i] << ":\n";
+        for (const auto& harjutus : kavad[i]) {
+            std::cout << harjutus.first << " - " << harjutus.second << std::endl;
+        }
+        std::cout << "----------------------\n";
+    }
+}
+
+
+void genereeriKasutajaKavad(const int plaaniValik, const int rutiiniValik,
+                             std::map<std::string, std::vector<std::pair<std::string, std::string>>>& harjutused,
+                             std::map<std::string, std::vector<std::pair<std::string, std::string>>>& harjutusedOriginaal,
+                             std::vector<std::vector<std::vector<std::pair<std::string, std::string>>>>& genereeritudKavad) {
+
+
+    for (int i = 0; i < 3; i++) {
+        switch (plaaniValik) {
+            case 1:
+                genereeritudKavad.push_back(genereeriIgaTeinePaevKavad(harjutused, harjutusedOriginaal, rutiiniValik));
+                break;
+            case 2:
+                genereeritudKavad.push_back(genereeriIgaKolmasPaevKavad(harjutused, harjutusedOriginaal, rutiiniValik));
+                break;
+            case 3:
+                genereeritudKavad.push_back(genereeriNadalavahetuseKavad(harjutused, harjutusedOriginaal, rutiiniValik));
+                break;
+        }
+    }
+
+}
+
+void peataValjund(const std::string& teade) {
+    std::cout << teade;
+    std::cin.clear();
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    std::cin.get();
+}
+
+void kuvaKasutajaKavad(int plaaniValik, std::vector<std::vector<std::vector<std::pair<std::string, std::string>>>> genereeritudKavad,
+                       std::vector<std::string>& igaTeineKuvamiseks, std::vector<std::string>& igaKolmasKuvamiseks) {
+
+    for (int i = 0; i < genereeritudKavad.size(); i++) {
+        std::cout << "Kava " << (i + 1) << ":\n";
+        switch (plaaniValik) {
+            case 1:
+                kuvaIgaTeinePaevKava(genereeritudKavad[i], igaTeineKuvamiseks);
+                break;
+            case 2:
+                kuvaIgaKolmasPaevKava(genereeritudKavad[i], igaKolmasKuvamiseks);
+                break;
+            case 3:
+                kuvaNadalavahetuseKava(genereeritudKavad[i]);
+                break;
+        }
+        if (i < genereeritudKavad.size() - 1) {
+            peataValjund("Vajuta 'Enter', et näha järgmist kava...\n");
+        }
+    }
+}
+
+void kuvaKasutajaValitudKava(int plaaniValik, int kavaValik, std::vector<std::vector<std::vector<std::pair<std::string, std::string>>>> genereeritudKavad,
+                             std::vector<std::string>& igaTeineKuvamiseks, std::vector<std::string>& igaKolmasKuvamiseks) {
+
+    std::cout << "\nTeie valitud treeningkava:\n";
+    switch (plaaniValik) {
+        case 1:
+            kuvaIgaTeinePaevKava(genereeritudKavad[kavaValik - 1], igaTeineKuvamiseks);
+            break;
+        case 2:
+            kuvaIgaKolmasPaevKava(genereeritudKavad[kavaValik - 1], igaKolmasKuvamiseks);
+            break;
+        case 3:
+            kuvaNadalavahetuseKava(genereeritudKavad[kavaValik - 1]);
+            break;
+    }
+}
 
 
 /**
@@ -302,11 +463,6 @@ void kaitleJson(const std::string& failiTee, const std::string& nimi, int vanus,
     uuendaJson(j, failiTee, nimi, vanus, kaal, eesmark);
 }
 
-void peataValjund(const std::string& teade) {
-    std::cout << teade;
-    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-    std::cin.get();
-}
 
 void viivitaValjund(const std::string& teade, int sek) {
     std::cout << teade << std::endl;
@@ -318,39 +474,41 @@ int main() {
 
     std::string failiTeeHarjutused = "../data/harjutused.json";
     std::string failiTeePlaanid = "../data/plaanid.json";
+    std::map<std::string, std::vector<std::pair<std::string, std::string>>> harjutused, harjutusedOriginaal;
+    std::vector<std::vector<std::vector<std::pair<std::string, std::string>>>> genereeritudKavad;
     std::string nimi;
     int vanus, plaaniValik, rutiiniValik, kavaValik;
     float kaal;
     std::string eesmark;
+    std::vector<std::string> igaTeineKuvamiseks = {
+            "Nädal 1 - esmaspäev", "Nädal 1 - kolmapäev", "Nädal 1 - reede",
+            "Nädal 1 - pühapäev", "Nädal 2 - teisipäev", "Nädal 2 - laupäev"
+    };
+    std::vector<std::string> igaKolmasKuvamiseks = {
+            "Nädal 1 - esmaspäev", "Nädal 1 - neljapäev", "Nädal 1 - pühapäev",
+            "Nädal 2 - kolmapäev", "Nädal 2 - laupäev", "Nädal 3 - teisipäev",
+            "Nädal 3 - reede"
+    };
+
+
 
     koguKasutajaAndmed(nimi, vanus, kaal, eesmark);
 
     plaaniValik = kasutajaValik("Vali oma treeningplaan (1: iga teine päev, 2: iga kolmas päev, 3: ainult nädalavahetused): ");
 
-    std::map<std::string, std::vector<std::pair<std::string, std::string>>> harjutused = laeHarjutused(failiTeeHarjutused);
+    harjutused = laeHarjutused(failiTeeHarjutused);
+    harjutusedOriginaal = harjutused;
     auto treeningPlaan = laeTreeningPlaan(failiTeePlaanid, plaaniValik);
     kuvaJsonPlaan(treeningPlaan);
 
     rutiiniValik = kasutajaValik("Vali oma treenimistüüp (1: ainult jõusaal, 2: ainult kardio, 3: kombinatsioon mõlemast): ");
 
-    std::vector<std::vector<std::vector<std::pair<std::string, std::string>>>> genereeritudKavad;
-
-    for (int i = 0; i < 3; i++) { // Generate three different plans
-        genereeritudKavad.push_back(genereeriNadalavahetuseKavad(harjutused, rutiiniValik));
-    }
-
-    viivitaValjund("Genereerime teile 3 treeningkava, mille hulgast saate endale sobiva valida. Palun oodake!", 3);
-
-    for (int i = 0; i < genereeritudKavad.size(); i++) {
-        std::cout << i+1;
-        peataValjund(" valik\n");
-        std::cout << "Kava " << i+1 << ":\n";
-        kuvaNadalavahetuseKava(genereeritudKavad[i]);
-    }
+    genereeriKasutajaKavad(plaaniValik, rutiiniValik, harjutused, harjutusedOriginaal, genereeritudKavad);
+    viivitaValjund("Genereerime teile 3 treeningkava, mille hulgast saate endale sobiva valida. Palun oodake!\n", 3);
+    kuvaKasutajaKavad(plaaniValik, genereeritudKavad, igaTeineKuvamiseks, igaKolmasKuvamiseks);
 
     kavaValik = kasutajaValik("Vali endale sobiv treeningkava (treeningkava number): ");
-    std::cout << "Teie valitud treeningkava:\n";
-    kuvaNadalavahetuseKava(genereeritudKavad[kavaValik - 1]);
+    kuvaKasutajaValitudKava(plaaniValik, kavaValik, genereeritudKavad, igaTeineKuvamiseks, igaKolmasKuvamiseks);
 
 
     /* koguKasutajaAndmed(nimi, vanus, kaal, eesmark);
