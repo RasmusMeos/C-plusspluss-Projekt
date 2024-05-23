@@ -7,6 +7,10 @@ include_directories(include lib)
 
 add_executable(C_plusspluss_Projekt src/main.cpp
         src/kasutaja.cpp
-        src/treeningkava.cpp
         include/kasutaja.h
-        include/treeningkava.h)
+        include/jsonHaldaja.h
+        src/jsonHaldaja.cpp
+        include/trenniGeneraator.h
+        src/trenniGeneraator.cpp
+        include/infoKuvaja.h
+        src/infoKuvaja.cpp)
