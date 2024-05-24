@@ -9,24 +9,34 @@
 #include "../include/trenniGeneraator.h"
 #include "../include/kasutaja.h"
 
-/**
- * Kogub kasutaja andmed standardse sisendi kaudu.
- * @param nimi Kasutaja nimi.
- * @param vanus Kasutaja vanus.
- * @param kaal Kasutaja kaal kilogrammides.
- * @param eesmark Kasutaja fitness eesmärk.
- */
-void koguKasutajaAndmed(std::string& nimi, int& vanus, float& kaal, std::string& eesmark) {
+bool kasutajaKinnitus(Kasutaja& kasutaja) {
+    kasutaja.kuva_andmed();
+    std::cout << "Kinnita andmed (Y/N): ";
+    char kinnita;
+    std::cin >> kinnita;
+    return (kinnita == 'Y' || kinnita == 'y');
+}
+
+Kasutaja koguKasutajaAndmed(std::string& failiTee, int kordiProovitud) {
+    if (kordiProovitud > 2) {
+        std::cerr << "Liiga palju uuesti proovitud. Programm sulgub...\n";
+        return Kasutaja();
+    }
+    std::string nimi;
+    int vanus;
+    float kaal;
+    std::string eesmark;
+
     std::cout << "Sisesta oma nimi: ";
     std::cin >> nimi;
 
     while (true) {
         std::cout << "Sisesta oma vanus: ";
         std::cin >> vanus;
-        if (std::cin.fail() || vanus < 0) {
+        if (std::cin.fail() || vanus < 0 || vanus > 125) {
             std::cin.clear();
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            std::cerr << "Error: Vanus peab olema positiivne ja numbriline. Proovi uuesti.\n";
+            std::cerr << "Error: Vanus peab olema positiivne, numbriline ja usutav. Proovi uuesti.\n";
             continue;
         }
         if (vanus < 17) {
@@ -40,10 +50,10 @@ void koguKasutajaAndmed(std::string& nimi, int& vanus, float& kaal, std::string&
     while (true) {
         std::cout << "Sisesta oma kaal (kg): ";
         std::cin >> kaal;
-        if (std::cin.fail() || kaal <= 0) {
+        if (std::cin.fail() || kaal <= 0 || kaal > 650) {
             std::cin.clear();
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            std::cerr << "Error: Kaal peab olema suurem kui 0 ja numbriline. Proovi uuesti.\n";
+            std::cerr << "Error: Kaal peab olema suurem kui 0, numbriline ja usutav. Proovi uuesti.\n";
             continue;
         }
         break;
@@ -51,6 +61,15 @@ void koguKasutajaAndmed(std::string& nimi, int& vanus, float& kaal, std::string&
 
     std::cout << "Sisesta oma fitness eesmärk: ";
     std::cin >> eesmark;
+
+    Kasutaja kasutaja(nimi, vanus, kaal, eesmark);
+    if (kasutajaKinnitus(kasutaja)) {
+        salvestaKasutaja(failiTee, kasutaja);
+    } else {
+        std::cout << "Sisesta andmed uuesti.\n";
+        koguKasutajaAndmed(failiTee, kordiProovitud+1);
+    }
+    return kasutaja;
 }
 
 /**
@@ -87,16 +106,13 @@ void viivitaValjund(const std::string& teade, int sek) {
 }
 
 int main() {
-    // std::string failiTeeKavad = "../data/kavad.json";
-
+    std::string failiTeeKasutajad = "../data/kasutajad.json";
+    std::string failiTeeKavad = "../data/kavad.json";
     std::string failiTeeHarjutused = "../data/harjutused.json";
     std::string failiTeePlaanid = "../data/plaanid.json";
     std::map<std::string, std::vector<std::pair<std::string, std::string>>> harjutused, harjutusedOriginaal;
     std::vector<std::vector<std::vector<std::pair<std::string, std::string>>>> genereeritudKavad;
-    std::string nimi;
-    int vanus, plaaniValik, rutiiniValik, kavaValik;
-    float kaal;
-    std::string eesmark;
+    int plaaniValik, rutiiniValik, kavaValik;
     std::vector<std::string> igaTeineKuvamiseks = {
             "Nädal 1 - esmaspäev", "Nädal 1 - kolmapäev", "Nädal 1 - reede",
             "Nädal 1 - pühapäev", "Nädal 2 - teisipäev", "Nädal 2 - laupäev"
@@ -109,7 +125,12 @@ int main() {
 
 
 
-    koguKasutajaAndmed(nimi, vanus, kaal, eesmark);
+    Kasutaja kasutaja = koguKasutajaAndmed(failiTeeKasutajad,0);
+
+    if (!kasutaja.kasSobiv()) {
+        return 1;
+    }
+
 
     plaaniValik = kasutajaValik("Vali oma treeningplaan (1: iga teine päev, 2: iga kolmas päev, 3: ainult nädalavahetused): ");
 
@@ -125,13 +146,12 @@ int main() {
     kuvaKasutajaKavad(plaaniValik, genereeritudKavad, igaTeineKuvamiseks, igaKolmasKuvamiseks);
 
     kavaValik = kasutajaValik("Vali endale sobiv treeningkava (treeningkava number): ");
+    salvestaTreeningkava(failiTeeKavad, kasutaja, genereeritudKavad[kavaValik - 1]);
+    viivitaValjund("Salvestame teie valitud kava. Palun oodake!\n", 2);
     kuvaKasutajaValitudKava(plaaniValik, kavaValik, genereeritudKavad, igaTeineKuvamiseks, igaKolmasKuvamiseks);
+    std::cout << "Teie kava on edukalt salvestatud!" << std::endl;
 
 
-    /* koguKasutajaAndmed(nimi, vanus, kaal, eesmark);
-     initsialiseeriKasutaja(nimi, vanus, kaal, eesmark);
-     initsialiseeriTreeningkava();
-     kaitleJson(failiTeePlaanid, nimi, vanus, kaal, eesmark); */
 
     return 0;
 

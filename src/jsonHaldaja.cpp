@@ -1,7 +1,34 @@
 #include "../include/jsonHaldaja.h"
-#include <fstream>
-#include <iostream>
-#include <limits>
+
+void salvestaKasutaja(const std::string& failiTee, const Kasutaja& kasutaja) {
+    json j;
+    std::ifstream inputFile(failiTee);
+
+    if (inputFile.peek() != std::ifstream::traits_type::eof()) {
+        inputFile >> j;
+    } else {
+        j = {{"kasutajad", json::array()}};
+    }
+    inputFile.close();
+
+    json uusKasutaja = {
+            {"nimi", kasutaja.getNimi()},
+            {"vanus", kasutaja.getVanus()},
+            {"kaal", kasutaja.getKaal()},
+            {"eesmärk", kasutaja.getEesmark()}
+    };
+
+    j["kasutajad"].push_back(uusKasutaja);
+
+    std::ofstream outputFile(failiTee);
+    if (!outputFile) {
+        std::cerr << "Error: Pole võimalik JSON'i faili kirjutamiseks avada!\n";
+        return;
+    }
+    outputFile << j.dump(4);
+    outputFile.close();
+}
+
 
 std::vector<std::string> laeTreeningPlaan(const std::string& failiTee, int& valik) {
     std::ifstream inputFile(failiTee);
@@ -47,88 +74,39 @@ std::map<std::string, std::vector<std::pair<std::string, std::string>>> laeHarju
             }
         }
     } else {
-        std::cerr << "Error: Pole võimalik JSON'i faili avada! " << failiTee << std::endl;
+        std::cerr << "Error: Pole võimalik JSON'i faili avada!\n" << failiTee << std::endl;
     }
 
     return harjutused;
 }
 
-/**
- * Laeb või initsialiseerib JSON objekti failist.
- * @param failiTee Tee JSON failini.
- * @return Initsialiseeritud või olemasolev JSON objekt.
- */
-json initsialiseeriJson(const std::string& failiTee) {
+void salvestaTreeningkava(const std::string& failiTee, const Kasutaja& kasutaja, const std::vector<std::vector<std::pair<std::string, std::string>>>& valitudKava) {
+    std::string nimi = kasutaja.getNimi();
     std::ifstream inputFile(failiTee);
-    json j;
-
-    // Vaatab, et fail eksisteerib ega oleks tühi
+    nlohmann::json j;
     if (inputFile.peek() != std::ifstream::traits_type::eof()) {
-        inputFile >> j;  // Loeme olemasoleva JSON'i sisse
+        inputFile >> j;
     } else {
-        // Kui faili ei eksisteeri või on tühi, loome uue JSON'i struktuuri
-        j = {{"kasutaja", json::array()}};
+        j = nlohmann::json::object();
     }
     inputFile.close();
-    return j;
-}
 
-/**
- * Uuendab JSON objekti uue kasutaja või olemasoleva kasutaja andmetega ja kirjutab muudatused faili.
- * @param j Viide JSON objektile.
- * @param failiTee Tee JSON failini.
- * @param nimi Kasutaja nimi.
- * @param vanus Kasutaja vanus.
- * @param kaal Kasutaja kaal.
- * @param eesmark Kasutaja eesmärk.
- */
-void uuendaJson(nlohmann::json& j, const std::string& failiTee, const std::string& nimi, int vanus, float kaal, const std::string& eesmark) {
-    json uusSissekanne = {
-            {"vanus", vanus},
-            {"kaal", kaal},
-            {"eesmärk", eesmark},
-            {"treeningkava", {
-                              {"esmaspäev", "30 min kardiotreening"},
-                              {"kolmapäev", "Jõutrenn - 'Pushday': Rind ja käed"},
-                              {"reede", "Jõutrenn - 'Pullday': Selg ja käed"}
-                      }}
-    };
-
-    bool kasutajaLeitud = false;
-    for (auto& user : j["kasutaja"]) {
-        if (user["nimi"] == nimi) {
-            user["sissekanded"].push_back(uusSissekanne);
-            kasutajaLeitud = true;
-            break;
+    nlohmann::json kavaJson;
+    for (const auto& sessioon : valitudKava) {
+        nlohmann::json sessioonJson;
+        for (const auto& trenn : sessioon) {
+            sessioonJson["treeningsessioon"].push_back({{"harjutus", trenn.first}, {"detailid", trenn.second}});
         }
+        kavaJson["sessioonid"].push_back(sessioonJson);
     }
 
-    if (!kasutajaLeitud) {
-        json uusKasutaja = {
-                {"nimi", nimi},
-                {"sissekanded", json::array({uusSissekanne})}
-        };
-        j["kasutaja"].push_back(uusKasutaja);
-    }
+    j[nimi]["treeningkavad"].push_back({{"kava", kavaJson}});
 
     std::ofstream outputFile(failiTee);
     if (!outputFile) {
-        std::cerr << "Error: Pole võimalik JSON'i faili kirjutamiseks avada!";
+        std::cerr << "Error: Pole võimalik JSON'i faili kirjutamiseks avada!\n";
         return;
     }
     outputFile << j.dump(4);
     outputFile.close();
-}
-
-/**
- * Käitleb kogu JSONiga seotud protsessi alates laadimisest kuni uuendamiseni.
- * @param failiTee Tee JSON failini.
- * @param nimi Kasutaja nimi.
- * @param vanus Kasutaja vanus.
- * @param kaal Kasutaja kaal.
- * @param eesmark Kasutaja eesmärk.
- */
-void kaitleJson(const std::string& failiTee, const std::string& nimi, int vanus, float kaal, const std::string& eesmark) {
-    json j = initsialiseeriJson(failiTee);
-    uuendaJson(j, failiTee, nimi, vanus, kaal, eesmark);
 }

@@ -1,59 +1,80 @@
 {
-    "kasutaja": [
-        {
-            "nimi": "Esimene",
-            "sissekanded": [
-                {
-                    "eesmärk": "vähendada_kaalu",
-                    "kaal": 82.0,
-                    "treeningkava": {
-                        "esmaspäev": "30 min cardio",
-                        "kolmapäev": "Strength training: Legs and Back",
-                        "reede": "Strength training: Arms and Shoulders"
-                    },
-                    "vanus": 31
-                },
-                {
-                    "eesmärk": "hoida_vormi",
-                    "kaal": 75.0,
-                    "treeningkava": {
-                        "esmaspäev": "30 min cardio",
-                        "kolmapäev": "Strength training: Legs and Back",
-                        "reede": "Strength training: Arms and Shoulders"
-                    },
-                    "vanus": 32
+    "John": {
+        "treeningkavad": [
+            {
+                "kava": {
+                    "sessioonid": [
+                        {
+                            "treeningsessioon": [
+                                {
+                                    "detailid": "5x5",
+                                    "harjutus": "Squats"
+                                },
+                                {
+                                    "detailid": "3x12-15",
+                                    "harjutus": "Face Pull"
+                                },
+                                {
+                                    "detailid": "4x6-8",
+                                    "harjutus": "Deadlift"
+                                },
+                                {
+                                    "detailid": "3x10-12",
+                                    "harjutus": "Reverse Flyes"
+                                },
+                                {
+                                    "detailid": "3x10",
+                                    "harjutus": "Triceps Dips"
+                                },
+                                {
+                                    "detailid": "3x12 per leg",
+                                    "harjutus": "Lunges"
+                                },
+                                {
+                                    "detailid": "3x10",
+                                    "harjutus": "V-ups"
+                                },
+                                {
+                                    "detailid": "3x10",
+                                    "harjutus": "Hammer Curls"
+                                },
+                                {
+                                    "detailid": "3x60 sekundit",
+                                    "harjutus": "Planks"
+                                },
+                                {
+                                    "detailid": "3x10",
+                                    "harjutus": "Lat Pulldown"
+                                }
+                            ]
+                        },
+                        {
+                            "treeningsessioon": [
+                                {
+                                    "detailid": "30 minutit",
+                                    "harjutus": "Sõudmine"
+                                },
+                                {
+                                    "detailid": "30 minutit",
+                                    "harjutus": "Ujumine"
+                                },
+                                {
+                                    "detailid": "30 minutit",
+                                    "harjutus": "Jooksmine"
+                                },
+                                {
+                                    "detailid": "45 minutit",
+                                    "harjutus": "Rattasõit"
+                                },
+                                {
+                                    "detailid": "15 minutit",
+                                    "harjutus": "Hüppenööriga hüppamine"
+                                }
+                            ]
+                        }
+                    ]
                 }
-            ]
-        },
-        {
-            "nimi": "Teine",
-            "sissekanded": [
-                {
-                    "eesmärk": "kasvatada_lihast",
-                    "kaal": 90.0,
-                    "treeningkava": {
-                        "esmaspäev": "30 min cardio",
-                        "kolmapäev": "Strength training: Legs and Back",
-                        "reede": "Strength training: Arms and Shoulders"
-                    },
-                    "vanus": 27
-                }
-            ]
-        },
-        {
-            "nimi": "Kolmas",
-            "sissekanded": [
-                {
-                    "eesmärk": "niisama",
-                    "kaal": 78.0,
-                    "treeningkava": {
-                        "esmaspäev": "30 min cardio",
-                        "kolmapäev": "Strength training: Legs and Back",
-                        "reede": "Strength training: Arms and Shoulders"
-                    },
-                    "vanus": 81
-                }
-            ]
-        }
-    ]
+            }
+        ]
+    }
 }

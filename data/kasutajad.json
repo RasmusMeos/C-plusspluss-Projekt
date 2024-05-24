@@ -1,0 +1,34 @@
+{
+    "kasutajad": [
+        {
+            "eesmark": "",
+            "kaal": 70.0,
+            "nimi": "Test1",
+            "vanus": 17
+        },
+        {
+            "eesmärk": "niisama",
+            "kaal": 76.0,
+            "nimi": "Test2",
+            "vanus": 18
+        },
+        {
+            "eesmärk": "prooviks",
+            "kaal": 75.0,
+            "nimi": "Test3",
+            "vanus": 90
+        },
+        {
+            "eesmärk": "proov",
+            "kaal": 77.0,
+            "nimi": "Esimene",
+            "vanus": 18
+        },
+        {
+            "eesmärk": "proov",
+            "kaal": 77.0,
+            "nimi": "John",
+            "vanus": 18
+        }
+    ]
+}
