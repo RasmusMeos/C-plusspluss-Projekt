@@ -16,7 +16,7 @@ public:
     Kasutaja();
 
     /**
-     * Initsialiseerib Kasutaja objekti antud parameetritega.
+     * Initsialiseerib Kasutaja objekti antud parameetritega:
      * @param nimi Kasutaja nimi.
      * @param vanus Kasutaja vanus.
      * @param kaal Kasutaja kaal kilogrammides.

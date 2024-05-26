@@ -23,7 +23,7 @@ void salvestaKasutaja(const std::string& failiTee, const Kasutaja& kasutaja) {
     std::ofstream outputFile(failiTee);
     if (!outputFile) {
         std::cerr << "Error: Pole võimalik JSON'i faili kirjutamiseks avada!\n";
-        return;
+        exit(1);
     }
     outputFile << j.dump(4);
     outputFile.close();
@@ -75,6 +75,7 @@ std::map<std::string, std::vector<std::pair<std::string, std::string>>> laeHarju
         }
     } else {
         std::cerr << "Error: Pole võimalik JSON'i faili avada!\n" << failiTee << std::endl;
+        exit(1);
     }
 
     return harjutused;
@@ -105,7 +106,7 @@ void salvestaTreeningkava(const std::string& failiTee, const Kasutaja& kasutaja,
     std::ofstream outputFile(failiTee);
     if (!outputFile) {
         std::cerr << "Error: Pole võimalik JSON'i faili kirjutamiseks avada!\n";
-        return;
+        exit(1);
     }
     outputFile << j.dump(4);
     outputFile.close();

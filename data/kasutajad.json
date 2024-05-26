@@ -41,6 +41,12 @@
             "kaal": 70.0,
             "nimi": "nikita",
             "vanus": 10
+        },
+        {
+            "eesmärk": "võtta alla",
+            "kaal": 81.0,
+            "nimi": "Mr Mister",
+            "vanus": 27
         }
     ]
 }

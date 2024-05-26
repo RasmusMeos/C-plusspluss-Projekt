@@ -64,7 +64,7 @@ void kuvaKasutajaKavad(int plaaniValik, std::vector<std::vector<std::vector<std:
                 break;
         }
         if (i < genereeritudKavad.size() - 1) {
-            peataValjund("Vajuta 'Enter', et näha järgmist kava...\n");
+            peataValjund("Vajuta 'Enter' (vajadusel 2 korda), et näha järgmist kava...\n");
         }
     }
 }

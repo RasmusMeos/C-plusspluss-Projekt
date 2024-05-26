@@ -29,11 +29,11 @@ std::vector<std::pair<std::string, std::string>> genereeriTreeningSessioon(
         const std::vector<std::string>& kategooriad, int mituHarjutust, bool lahtesta);
 
 /**
- * Genereerib iga teine päev kavad.
+ * Genereerib iga-teine-päev kavad.
  * @param harjutused Harjutuste nimekiri.
  * @param harjutusedOriginaal Algne harjutuste nimekiri.
  * @param rutiiniValik Kasutaja rutiini valik.
- * @return Vektor iga teine päev kavadest.
+ * @return Vektor iga-teine-päev kavadest.
  */
 std::vector<std::vector<std::pair<std::string, std::string>>> genereeriIgaTeinePaevKavad(
         std::map<std::string, std::vector<std::pair<std::string, std::string>>>& harjutused,
@@ -41,11 +41,11 @@ std::vector<std::vector<std::pair<std::string, std::string>>> genereeriIgaTeineP
         int rutiiniValik);
 
 /**
- * Genereerib iga kolmas päev kavad.
+ * Genereerib iga-kolmas-päev kavad.
  * @param harjutused Harjutuste nimekiri.
  * @param harjutusedOriginaal Algne harjutuste nimekiri.
  * @param rutiiniValik Kasutaja rutiini valik.
- * @return Vektor iga kolmas päev kavadest.
+ * @return Vektor-iga-kolmas päev kavadest.
  */
 std::vector<std::vector<std::pair<std::string, std::string>>> genereeriIgaKolmasPaevKavad(
         std::map<std::string, std::vector<std::pair<std::string, std::string>>>& harjutused,

@@ -9,7 +9,14 @@
 #include "../include/trenniGeneraator.h"
 #include "../include/kasutaja.h"
 
+
+/**
+ * Kinnitab kasutaja andmed konsooli sisendi kaudu.
+ * @param kasutaja Viide Kasutaja objektile, mis sisaldab kasutaja andmeid.
+ * @return Tagastab true, kui kasutaja kinnitab andmed sisestades 'Y' või 'y'; vastasel juhul tagastab false.
+ */
 bool kasutajaKinnitus(Kasutaja& kasutaja) {
+    std::cout << "\nÜlevaade: " << std::endl;
     kasutaja.kuva_andmed();
     std::cout << "Kinnita andmed (Y/N): ";
     char kinnita;
@@ -17,50 +24,75 @@ bool kasutajaKinnitus(Kasutaja& kasutaja) {
     return (kinnita == 'Y' || kinnita == 'y');
 }
 
+/**
+ * Valideerib numbrilisi sisendeid määratud piiridega.
+ * @param vaartus Viide muutujale, kuhu sisend salvestatakse.
+ * @param teade Kasutajale kuvatava küsimuse sõnum.
+ * @param veateade Veasõnum, mis kuvatakse sisendi valideerimise ebaõnnestumisel.
+ * @param min Minimaalne aktsepteeritav väärtus.
+ * @param max Maksimaalne aktsepteeritav väärtus.
+ * @return Tagastab true, kui sisend on edukalt valideeritud ja salvestatud.
+ */
+template<typename T>
+bool valideeriNumbrilineSisend(T& vaartus, const std::string& teade, const std::string& veateade, T min, T max) {
+    while (true) {
+        std::cout << teade;
+        std::cin >> vaartus;
+        if (std::cin.fail() || vaartus < min || vaartus > max) {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cerr << veateade << std::endl;
+            continue;
+        }
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        return true;
+    }
+}
+
+/**
+ * Valideerib sõne sisendeid, tagades, et need ei ole tühjad.
+ * @param vaartus Viide string muutujale, kuhu sisend salvestatakse.
+ * @param teade Kasutajale kuvatava küsimuse sõnum.
+ * @param veateade Vea sõnum, mis kuvatakse kui sisend on sobimatu.
+ * @return Tagastab true, kui sisend on edukalt valideeritud ja salvestatud.
+ */
+bool valideeriSoneSisend(std::string& vaartus, const std::string& teade, const std::string& veateade) {
+    while (true) {
+        std::cout << teade;
+        std::getline(std::cin, vaartus);
+        if (vaartus.empty()) {
+            std::cerr << veateade << std::endl;
+            continue;
+        }
+        return true;
+    }
+}
+
+/**
+ * Kogub kasutaja andmed ja valideerib neid.
+ * @param failiTee Faili tee, kuhu kasutaja andmed salvestatakse.
+ * @param kordiProovitud Arv, mis näitab, mitu korda kasutaja on andmeid sisestanud.
+ * @return Tagastab Kasutaja objekti, kui andmed on edukalt kogutud ja valideeritud; vastasel juhul tagastab tühja objekti.
+ */
 Kasutaja koguKasutajaAndmed(std::string& failiTee, int kordiProovitud) {
     if (kordiProovitud > 2) {
         std::cerr << "Liiga palju uuesti proovitud. Programm sulgub...\n";
-        return Kasutaja();
+        return {}; //saaks kohe ka 'exit(1)' kasutada
     }
-    std::string nimi;
+    std::string nimi, eesmark;
     int vanus;
     float kaal;
-    std::string eesmark;
 
-    std::cout << "Sisesta oma nimi: ";
-    std::cin >> nimi;
+    valideeriSoneSisend(nimi, "Sisesta oma nimi: ", "Nimi ei tohi olla tühi. Proovi uuesti!");
+    valideeriNumbrilineSisend(vanus, "Sisesta oma vanus: ", "Error: Vanus peab olema positiivne, numbriline ja vahemikus 0-125. Proovi uuesti!",0,125);
 
-    while (true) {
-        std::cout << "Sisesta oma vanus: ";
-        std::cin >> vanus;
-        if (std::cin.fail() || vanus < 0 || vanus > 125) {
-            std::cin.clear();
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            std::cerr << "Error: Vanus peab olema positiivne, numbriline ja usutav. Proovi uuesti.\n";
-            continue;
-        }
         if (vanus < 17) {
             std::cout << "Hoiatus: Oled alla 17 aasta vanune. Palun konsulteeri treeneriga enne treeningprogrammi alustamist. (Vajuta 'Enter' jätkamiseks)\n";
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             std::cin.get();
         }
-        break;
-    }
-
-    while (true) {
-        std::cout << "Sisesta oma kaal (kg): ";
-        std::cin >> kaal;
-        if (std::cin.fail() || kaal <= 0 || kaal > 650) {
-            std::cin.clear();
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            std::cerr << "Error: Kaal peab olema suurem kui 0, numbriline ja usutav. Proovi uuesti.\n";
-            continue;
-        }
-        break;
-    }
-
-    std::cout << "Sisesta oma fitness eesmärk: ";
-    std::cin >> eesmark;
+    valideeriNumbrilineSisend(kaal, "Sisesta oma kaal (kg): ", "Error: Kaal peab olema suurem kui 0, numbriline ja vahemikus 0-650 (kg). Proovi uuesti!", 0.1f, 650.0f);
+    valideeriSoneSisend(eesmark,"Sisesta oma fitness eesmärk: ", "Fitness eesmärk ei tohi olla tühi. Proovi uuesti!");
 
     Kasutaja kasutaja(nimi, vanus, kaal, eesmark);
     if (kasutajaKinnitus(kasutaja)) {
@@ -73,17 +105,10 @@ Kasutaja koguKasutajaAndmed(std::string& failiTee, int kordiProovitud) {
 }
 
 /**
- * Initsialiseerib Kasutaja objekti ja kuvab andmed.
- * @param nimi Kasutaja nimi.
- * @param vanus Kasutaja vanus.
- * @param kaal Kasutaja kaal kilogrammides.
- * @param eesmark Kasutaja fitness eesmärk.
+ * Küsib kasutajalt valikut konkreetse küsimuse alusel.
+ * @param teade Sõnum, mis esitatakse kasutajale.
+ * @return Tagastab kasutaja sisestatud valiku numbrina.
  */
-void initsialiseeriKasutaja(const std::string& nimi, int vanus, float kaal, const std::string& eesmark) {
-    Kasutaja kasutaja(nimi, vanus, kaal, eesmark);
-    kasutaja.kuva_andmed();
-}
-
 int kasutajaValik(const std::string& teade) {
     int valik;
     do {
@@ -100,6 +125,11 @@ int kasutajaValik(const std::string& teade) {
     return valik;
 }
 
+/**
+ * Viivitab teatud aja ja kuvab seejärel teate.
+ * @param teade Sõnum, mida kuvada.
+ * @param sek Sekundid, kui kaua viivitamine kestab.
+ */
 void viivitaValjund(const std::string& teade, int sek) {
     std::cout << teade << std::endl;
     std::this_thread::sleep_for(std::chrono::seconds(sek));
@@ -127,7 +157,7 @@ int main() {
 
     Kasutaja kasutaja = koguKasutajaAndmed(failiTeeKasutajad,0);
 
-    if (!kasutaja.kasSobiv()) {
+    if (!kasutaja.kasSobiv()) { // täiendav kontroll
         return 1;
     }
 

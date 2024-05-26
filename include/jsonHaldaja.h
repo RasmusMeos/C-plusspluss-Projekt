@@ -29,7 +29,7 @@ std::vector<std::string> laeTreeningPlaan(const std::string& failiTee, int& vali
 /**
  * Laeb harjutused JSON failist.
  * @param failiTee JSON faili tee.
- * @return Kaart harjutuste kategooriatest ja harjutustest.
+ * @return 'Map' harjutuste kategooriatest ja harjutustest.
  */
 std::map<std::string, std::vector<std::pair<std::string, std::string>>> laeHarjutused(const std::string& failiTee);
 
