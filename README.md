@@ -78,3 +78,6 @@ std::vector<std::vector<std::pair<std::string, std::string>>> genereeriIgaTeineP
 std::vector<std::vector<std::pair<std::string, std::string>>> genereeriIgaKolmasPaevKavad(std::map<std::string, std::vector<std::pair<std::string, std::string>>>& harjutused, const std::map<std::string, std::vector<std::pair<std::string, std::string>>>& harjutusedOriginaal, int rutiiniValik)
 std::vector<std::vector<std::pair<std::string, std::string>>> genereeriNadalavahetuseKavad(std::map<std::string, std::vector<std::pair<std::string, std::string>>>& harjutused, const std::map<std::string, std::vector<std::pair<std::string, std::string>>>& harjutusedOriginaal, int rutiiniValik)
 void genereeriKasutajaKavad(const int plaaniValik, const int rutiiniValik, std::map<std::string, std::vector<std::pair<std::string, std::string>>>& harjutused, std::map<std::string, std::vector<std::pair<std::string, std::string>>>& harjutusedOriginaal, std::vector<std::vector<std::vector<std::pair<std::string, std::string>>>>& genereeritudKavad)
+
+Autorid
+Projekti on loonud Rasmus Meos, Nikita Chernov.
