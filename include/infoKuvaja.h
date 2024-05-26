@@ -4,6 +4,7 @@
 #include <vector>
 #include <string>
 #include <utility> // std::pair jaoks
+#include <limits>
 
 void peataValjund(const std::string& teade);
 void kuvaJsonPlaan(const std::vector<std::string>& list);

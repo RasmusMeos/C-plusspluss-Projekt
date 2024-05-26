@@ -76,5 +76,147 @@
                 }
             }
         ]
+    },
+    "Nikita": {
+        "treeningkavad": [
+            {
+                "kava": {
+                    "sessioonid": [
+                        {
+                            "treeningsessioon": [
+                                {
+                                    "detailid": "3x till failure",
+                                    "harjutus": "Pull-ups"
+                                },
+                                {
+                                    "detailid": "3x10",
+                                    "harjutus": "Lat Pulldown"
+                                },
+                                {
+                                    "detailid": "3x15",
+                                    "harjutus": "Push-ups"
+                                },
+                                {
+                                    "detailid": "3x10",
+                                    "harjutus": "Leg Extensions"
+                                },
+                                {
+                                    "detailid": "3x10",
+                                    "harjutus": "Hammer Curls"
+                                },
+                                {
+                                    "detailid": "4x6-8",
+                                    "harjutus": "Deadlift"
+                                }
+                            ]
+                        },
+                        {
+                            "treeningsessioon": [
+                                {
+                                    "detailid": "15 minutit",
+                                    "harjutus": "Hüppenööriga hüppamine"
+                                },
+                                {
+                                    "detailid": "30 minutit",
+                                    "harjutus": "Jooksmine"
+                                },
+                                {
+                                    "detailid": "30 minutit",
+                                    "harjutus": "Sõudmine"
+                                }
+                            ]
+                        },
+                        {
+                            "treeningsessioon": [
+                                {
+                                    "detailid": "3x10",
+                                    "harjutus": "V-ups"
+                                },
+                                {
+                                    "detailid": "3x10",
+                                    "harjutus": "Ab Wheel Rollout"
+                                },
+                                {
+                                    "detailid": "3x12 per leg",
+                                    "harjutus": "Lunges"
+                                },
+                                {
+                                    "detailid": "3x12-15",
+                                    "harjutus": "Face Pull"
+                                },
+                                {
+                                    "detailid": "3x10",
+                                    "harjutus": "Leg Extensions"
+                                },
+                                {
+                                    "detailid": "3x15 per side",
+                                    "harjutus": "Russian Twists"
+                                }
+                            ]
+                        },
+                        {
+                            "treeningsessioon": [
+                                {
+                                    "detailid": "15 minutit",
+                                    "harjutus": "Hüppenööriga hüppamine"
+                                },
+                                {
+                                    "detailid": "20 minutit",
+                                    "harjutus": "HIIT"
+                                },
+                                {
+                                    "detailid": "30 minutit",
+                                    "harjutus": "Sõudmine"
+                                }
+                            ]
+                        },
+                        {
+                            "treeningsessioon": [
+                                {
+                                    "detailid": "3x10-12",
+                                    "harjutus": "Reverse Flyes"
+                                },
+                                {
+                                    "detailid": "4x8-10",
+                                    "harjutus": "Bent Over Row"
+                                },
+                                {
+                                    "detailid": "3x10",
+                                    "harjutus": "Hammer Curls"
+                                },
+                                {
+                                    "detailid": "3x10",
+                                    "harjutus": "Leg Extensions"
+                                },
+                                {
+                                    "detailid": "4x12",
+                                    "harjutus": "Calf Raises"
+                                },
+                                {
+                                    "detailid": "3x till failure",
+                                    "harjutus": "Pull-ups"
+                                }
+                            ]
+                        },
+                        {
+                            "treeningsessioon": [
+                                {
+                                    "detailid": "20 minutit",
+                                    "harjutus": "HIIT"
+                                },
+                                {
+                                    "detailid": "20 minutit",
+                                    "harjutus": "Trepi ronimine"
+                                },
+                                {
+                                    "detailid": "15 minutit",
+                                    "harjutus": "Hüppenööriga hüppamine"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            }
+        ]
     }
 }
