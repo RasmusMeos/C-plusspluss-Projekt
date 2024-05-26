@@ -21,7 +21,7 @@ Kompileeri ja käivita projekt järgmiste käskudega:
 ```bash
 g++ -o treeningkava main.cpp kasutaja.cpp jsonHaldaja.cpp infoKuvaja.cpp trenniGeneraator.cpp -I ../lib/json.hpp
 ./treeningkava
-
+```
 ## Sisendfailid
 
 - `../data/kasutajad.json`: Kasutajate andmed
@@ -55,7 +55,7 @@ Sisesta oma kaal (kg): 70
 Sisesta oma fitness eesmärk: Kaalu kaotus
 Vali oma treeningplaan (1: iga teine päev, 2: iga kolmas päev, 3: ainult nädalavahetused): 1
 Vali oma treenimistüüp (1: ainult jõusaal, 2: ainult kardio, 3: kombinatsioon mõlemast): 3
-
+```
 
 ## Funktsioonide Ülevaade
 
