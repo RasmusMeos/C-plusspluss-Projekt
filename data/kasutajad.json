@@ -35,6 +35,12 @@
             "kaal": 65.0,
             "nimi": "Nikita",
             "vanus": 12
+        },
+        {
+            "eesmärk": "skinny",
+            "kaal": 70.0,
+            "nimi": "nikita",
+            "vanus": 10
         }
     ]
 }

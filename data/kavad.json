@@ -218,5 +218,111 @@
                 }
             }
         ]
+    },
+    "nikita": {
+        "treeningkavad": [
+            {
+                "kava": {
+                    "sessioonid": [
+                        {
+                            "treeningsessioon": [
+                                {
+                                    "detailid": "30 minutit",
+                                    "harjutus": "Jooksmine"
+                                },
+                                {
+                                    "detailid": "30 minutit",
+                                    "harjutus": "Ujumine"
+                                },
+                                {
+                                    "detailid": "30 minutit",
+                                    "harjutus": "Sõudmine"
+                                }
+                            ]
+                        },
+                        {
+                            "treeningsessioon": [
+                                {
+                                    "detailid": "45 minutit",
+                                    "harjutus": "Rattasõit"
+                                },
+                                {
+                                    "detailid": "30 minutit",
+                                    "harjutus": "Sõudmine"
+                                },
+                                {
+                                    "detailid": "30 minutit",
+                                    "harjutus": "Ujumine"
+                                }
+                            ]
+                        },
+                        {
+                            "treeningsessioon": [
+                                {
+                                    "detailid": "30 minutit",
+                                    "harjutus": "Ujumine"
+                                },
+                                {
+                                    "detailid": "30 minutit",
+                                    "harjutus": "Sõudmine"
+                                },
+                                {
+                                    "detailid": "15 minutit",
+                                    "harjutus": "Hüppenööriga hüppamine"
+                                }
+                            ]
+                        },
+                        {
+                            "treeningsessioon": [
+                                {
+                                    "detailid": "30 minutit",
+                                    "harjutus": "Jooksmine"
+                                },
+                                {
+                                    "detailid": "15 minutit",
+                                    "harjutus": "Hüppenööriga hüppamine"
+                                },
+                                {
+                                    "detailid": "20 minutit",
+                                    "harjutus": "Trepi ronimine"
+                                }
+                            ]
+                        },
+                        {
+                            "treeningsessioon": [
+                                {
+                                    "detailid": "15 minutit",
+                                    "harjutus": "Hüppenööriga hüppamine"
+                                },
+                                {
+                                    "detailid": "30 minutit",
+                                    "harjutus": "Jooksmine"
+                                },
+                                {
+                                    "detailid": "45 minutit",
+                                    "harjutus": "Rattasõit"
+                                }
+                            ]
+                        },
+                        {
+                            "treeningsessioon": [
+                                {
+                                    "detailid": "30 minutit",
+                                    "harjutus": "Sõudmine"
+                                },
+                                {
+                                    "detailid": "20 minutit",
+                                    "harjutus": "Trepi ronimine"
+                                },
+                                {
+                                    "detailid": "30 minutit",
+                                    "harjutus": "Jooksmine"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            }
+        ]
     }
 }
